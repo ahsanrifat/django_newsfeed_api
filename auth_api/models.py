@@ -1,16 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .managers import UserManager
+from django.utils import timezone
 
 # Create your models here.
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=True)
     username = None
-    groups = None
-    user_permissions = None
+    full_name = models.CharField(max_length=150, blank=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    start_date = models.DateTimeField(default=timezone.now)
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["full_name"]
     objects = UserManager()
 
     class Meta:
         db_table = "custom_user"
+
+    def __str__(self):
+        return self.email

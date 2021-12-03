@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('auth/', include('auth_api.urls')),
+    path("admin/", admin.site.urls),
+    path("auth/", include("auth_api.urls")),
+    path("rest-auth/", include("rest_framework.urls", namespace="rest_framework"))
     # path('newsfeed/', include('newsfeed_app.urls'))
 ]
