@@ -1,8 +1,4 @@
-from django.shortcuts import render
-from rest_framework import response
-from rest_framework import response
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from .serializers import UserCreateSerializer
@@ -69,10 +65,3 @@ class GetUpdateDeleteUser(RetrieveUpdateDestroyAPIView):
 
     def put(self, request, *args, **kwargs):
         return Response({"success": False, "message": "PUT not allowed"})
-
-
-# class BlacklistRefreshView(APIView):
-#     def post(self, request):
-#         # token = RefreshToken(request.data.get("refresh"))
-#         # token.blacklist()
-#         return Response({"success": True})

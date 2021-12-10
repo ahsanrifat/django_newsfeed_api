@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import User
-from rest_framework.response import Response
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
