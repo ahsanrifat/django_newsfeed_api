@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import GetCreateUpdateDeleteNewsFeedSetting
+from .views import GetUpdateNewsFeedSetting
 
 urlpatterns = [
-    path("<user>/", GetCreateUpdateDeleteNewsFeedSetting.as_view()),
+    path("<user>/", GetUpdateNewsFeedSetting.as_view()),
     # path("newsFeed/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]

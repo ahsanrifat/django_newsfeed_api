@@ -14,7 +14,7 @@ def get_exception_response_json(e):
     return {"success": False, "message": str(e)}
 
 
-class GetCreateUpdateDeleteNewsFeedSetting(RetrieveUpdateDestroyAPIView):
+class GetUpdateNewsFeedSetting(RetrieveUpdateDestroyAPIView):
     queryset = NewsFeedSetting.objects.all()
     serializer_class = NewsFeedSettingSerializer
     lookup_field = "user"
@@ -62,3 +62,9 @@ class GetCreateUpdateDeleteNewsFeedSetting(RetrieveUpdateDestroyAPIView):
                 return Response(get_unauthorised_response_json(), 401)
         except Exception as e:
             return Response(get_exception_response_json(e), 400)
+
+    def put(self, request, *args, **kwargs):
+        return Response("Not Allowed", 400)
+
+    def delete(self, request, *args, **kwargs):
+        return Response("Not Allowed", 400)

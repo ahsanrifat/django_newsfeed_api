@@ -7,6 +7,16 @@ from .serializers import UserCreateSerializer
 from .models import User
 
 # Create your views here.
+
+
+def get_unauthorised_response_json():
+    return {"success": False, "message": "Unauthorised Content"}
+
+
+def get_exception_response_json(e):
+    return {"success": False, "message": str(e)}
+
+
 class CreateNewUser(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
@@ -22,7 +32,7 @@ class CreateNewUser(CreateAPIView):
             else:
                 return Response({"success": False, "Message": response.message})
         except Exception as e:
-            return Response({"success": False, "Message": e.get_full_details()})
+            return Response(get_exception_response_json(e), 400)
 
 
 class GetUpdateDeleteUser(RetrieveUpdateDestroyAPIView):
@@ -41,11 +51,12 @@ class GetUpdateDeleteUser(RetrieveUpdateDestroyAPIView):
                 return response
             else:
                 return Response(
-                    {"success": False, "message": "Only an Admin can delete an user"}
+                    {"success": False, "message": "Only an Admin can delete an user"},
+                    401,
                 )
         except Exception as e:
             print("Exception in delete user-->", e)
-            return Response({"success": False, "message": "Exception"})
+            return Response(get_exception_response_json(e), 400)
 
     def patch(self, request, *args, **kwargs):
         try:
@@ -61,7 +72,7 @@ class GetUpdateDeleteUser(RetrieveUpdateDestroyAPIView):
                 return Response({"success": True, "message": "Data updated partially"})
         except Exception as e:
             print("Exception in patch user-->", e)
-            return Response({"success": False, "message": "Exception"})
+            return Response(get_exception_response_json(e), 400)
 
     def put(self, request, *args, **kwargs):
-        return Response({"success": False, "message": "PUT not allowed"})
+        return Response({"success": False, "message": "PUT not allowed"}, 400)
