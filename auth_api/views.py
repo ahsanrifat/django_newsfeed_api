@@ -1,7 +1,8 @@
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
-from .serializers import UserCreateSerializer
+from .serializers import UserCreateSerializer, CustomTokenObtainPairSerializer
 
 # from django.core.exceptions import PermissionDenied
 from .models import User
@@ -76,3 +77,7 @@ class GetUpdateDeleteUser(RetrieveUpdateDestroyAPIView):
 
     def put(self, request, *args, **kwargs):
         return Response({"success": False, "message": "PUT not allowed"}, 400)
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer

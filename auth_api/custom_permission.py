@@ -7,7 +7,6 @@ class IsAdminOrUser(BasePermission):
     def has_permission(self, request, view):
         try:
             user_id = view.kwargs[view.lookup_field]
-            print(user_id)
             if request.user.is_authenticated and (
                 request.user.is_superuser or request.user.id == user_id
             ):
