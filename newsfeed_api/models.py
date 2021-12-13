@@ -15,20 +15,16 @@ class NewsFeedSetting(models.Model):
     def __str__(self):
         return self.email
 
-    def set_list_countries(self, list_obj):
-        self.countries = json.dumps(list_obj)
+    def split_str(self, s):
+        if s == "":
+            return []
+        return s.split(",")
 
     def get_list_countries(self):
-        return json.loads(self.countries)
-
-    def set_list_sources(self, list_obj):
-        self.sources = json.dumps(list_obj)
+        return self.split_str(self.countries)
 
     def get_list_sources(self):
-        return json.loads(self.sources)
-
-    def set_list_keywords(self, list_obj):
-        self.keywords = json.dumps(list_obj)
+        return self.split_str(self.sources)
 
     def get_list_keywords(self):
-        return json.loads(self.keywords)
+        return self.split_str(self.keywords)
