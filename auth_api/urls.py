@@ -9,8 +9,7 @@ from .views import (
     CustomTokenObtainPairView,
     UploadProfilePicture,
 )
-from django.conf import settings
-from django.conf.urls.static import static
+
 
 urlpatterns = [
     path("api/token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
@@ -19,4 +18,4 @@ urlpatterns = [
     path("api/user/logout/", TokenBlacklistView.as_view()),
     path("api/user/<pk>/", GetUpdateDeleteUser.as_view()),
     path("api/upload/profile_picture/user/<pk>/", UploadProfilePicture.as_view()),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

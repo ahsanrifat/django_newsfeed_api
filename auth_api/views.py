@@ -64,21 +64,31 @@ class UploadProfilePicture(CreateAPIView):
         try:
             user_obj = User.objects.get(id=kwargs.get("pk"))
             profile_picture = request.data["profile_picture"]
-            profile_picture.name = (
-                str(kwargs.get("pk"))
-                + str(user_obj.start_date)
-                + "_profile_picture."
-                + profile_picture.name.split(".")[-1]
-            )
-            user_obj.profile_picture = profile_picture
-            user_obj.save()
-            return Response(
-                {
-                    "success": True,
-                    "message": "Profile Picture Uploaded Successfully",
-                    "profile_picture_path": user_obj.profile_picture.url,
-                }
-            )
+            if profile_picture.name.split(".")[-1] in ("png", "jpg", "jpeg"):
+                profile_picture.name = (
+                    str(kwargs.get("pk"))
+                    + str(user_obj.start_date)
+                    + "_profile_picture."
+                    + profile_picture.name.split(".")[-1]
+                )
+                user_obj.profile_picture = profile_picture
+                user_obj.save()
+                return Response(
+                    {
+                        "success": True,
+                        "message": "Profile Picture Uploaded Successfully",
+                        "profile_picture_path": user_obj.profile_picture.url,
+                    }
+                )
+            else:
+                return Response(
+                    {
+                        "success": False,
+                        "message": "Invalid file format",
+                        "accepted_formats": "png, jpeg, jpg",
+                        "given_format": profile_picture.name.split(".")[-1],
+                    }
+                )
         except Exception as e:
             return Response(get_exception_response_json(e), 400)
 

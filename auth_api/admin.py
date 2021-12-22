@@ -14,9 +14,17 @@ class UserAdminConfig(UserAdmin):
         "user_name",
         "full_name",
     )
-    list_filter = ("id", "email", "full_name", "is_active", "is_staff", "is_superuser")
+    list_filter = ("is_active", "is_staff", "is_superuser")
     ordering = ("-start_date",)
-    list_display = ("id", "email", "full_name", "is_active", "is_staff", "is_superuser")
+    list_display = (
+        "id",
+        "email",
+        "profile_picture",
+        "full_name",
+        "is_active",
+        "is_staff",
+        "is_superuser",
+    )
     fieldsets = (
         (
             None,
@@ -51,4 +59,4 @@ class UserAdminConfig(UserAdmin):
     )
 
 
-admin.site.register(User)
+admin.site.register(User, UserAdminConfig)

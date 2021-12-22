@@ -1,10 +1,8 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import (
     TokenObtainPairSerializer,
-    TokenBlacklistSerializer,
 )
 from .models import User
-from rest_framework.response import Response
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
