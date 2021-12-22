@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.serializers import (
+    TokenObtainPairSerializer,
+    TokenBlacklistSerializer,
+)
 from .models import User
 from rest_framework.response import Response
 
@@ -27,17 +30,33 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         try:
             data = super().validate(attrs)
             refresh = self.get_token(self.user)
-            data["refresh"] = str(refresh)
-            data.pop("refresh", None)  # remove refresh from the payload
+            # data.pop("refresh", None)  # remove refresh from the payload
             data["access"] = str(refresh.access_token)
+            data["refresh"] = str(refresh)
 
             # Add extra responses here
-            data["user_id"] = self.user.id
+            data["id"] = self.user.id
             data["email"] = self.user.email
             data["full_name"] = self.user.full_name
             data["is_admin"] = self.user.is_superuser
             data["is_stuff"] = self.user.is_staff
             # data["date"] = datetime.date.today()
-            return data
+            return_data = {"success": True, "user_auth_data": data}
+            return return_data
         except Exception as e:
             return {"success": False, "message": str(e)}
+
+
+# class CustomTokenBlacklistSerializer(TokenBlacklistSerializer):
+#     access = serializers.CharField()
+
+#     def validate(self, attrs):
+#         try:
+#             super().validate(attrs)
+#             refresh = RefreshToken(attrs["refresh"])
+#             try:
+#                 refresh.blacklist()
+#             except AttributeError:
+#                 pass
+#         except Exception as e:
+#             return {"success": False, "message": str(e)}

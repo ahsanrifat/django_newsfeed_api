@@ -12,6 +12,9 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     start_date = models.DateTimeField(default=timezone.now)
+    profile_picture = models.ImageField(
+        null=True, blank=True, upload_to="profile_pictures/%Y"
+    )
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["full_name"]
     objects = UserManager()
@@ -20,4 +23,4 @@ class User(AbstractUser):
         db_table = "custom_user"
 
     def __str__(self):
-        return self.email
+        return self.email + "_" + str(self.id)
