@@ -52,7 +52,7 @@ class CreateNewUser(CreateAPIView):
             else:
                 return Response({"success": False, "message": response.message})
         except Exception as e:
-            return Response(get_exception_response_json(e), 400)
+            return Response(get_exception_response_json(e))
 
 
 class UploadProfilePicture(CreateAPIView):
